@@ -12,4 +12,6 @@ public interface PersonRequest extends RequestContext {
     InstanceRequest<PersonProxy, Void> save();
     
     Request<List<PersonProxy>> listAll();
+    
+    Request<List<PersonProxy>> findUserEntries(int firstResult, int maxResults);
 }

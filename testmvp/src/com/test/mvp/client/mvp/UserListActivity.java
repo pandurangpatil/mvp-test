@@ -2,12 +2,14 @@ package com.test.mvp.client.mvp;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.test.mvp.client.ClientFactory;
 import com.test.mvp.client.place.UserListPlace;
 import com.test.mvp.client.ui.UserListView;
+import com.test.mvp.client.ui.UserListView.Presenter;
 
-public class UserListActivity extends AbstractActivity {
+public class UserListActivity extends AbstractActivity implements Presenter {
     // Used to obtain views, eventBus, placeController
     // Alternatively, could be injected via GIN
     private ClientFactory clientFactory;
@@ -31,6 +33,11 @@ public class UserListActivity extends AbstractActivity {
     @Override
     public String mayStop() {
         return "Please hold on. This activity is stopping.";
+    }
+    
+    @Override
+    public void goTo(Place place) {
+        clientFactory.getPlaceController().goTo(place);
     }
     
 }

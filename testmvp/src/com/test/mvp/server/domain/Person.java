@@ -7,7 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Query;
 import javax.persistence.Version;
+
+import com.google.gwt.requestfactory.shared.Request;
+import com.test.mvp.shared.PersonProxy;
 
 @Entity
 public class Person {
@@ -79,6 +83,7 @@ public class Person {
         return null;
     }
     
+    @SuppressWarnings("unchecked")
     public static List<Person> listAll() {
         EntityManager em = EMF.get().createEntityManager();
         try {
@@ -91,4 +96,20 @@ public class Person {
         }
     }
     
+    @SuppressWarnings("unchecked")
+    public static List<Person> findUserEntries(int firstResult, int maxResults) {
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Query query = em.createQuery("select o from Person o");
+            query.setFirstResult(firstResult);
+            query.setMaxResults(maxResults);
+            
+            List<Person> list = query.getResultList();
+            // force to get all the employees
+            list.size();
+            return list;
+        } finally {
+            em.close();
+        }
+    }
 }

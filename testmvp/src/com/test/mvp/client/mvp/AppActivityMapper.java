@@ -5,6 +5,7 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.test.mvp.client.ClientFactory;
 import com.test.mvp.client.place.UserListPlace;
+import com.test.mvp.client.place.UserPlace;
 
 public class AppActivityMapper implements ActivityMapper {
     
@@ -29,7 +30,8 @@ public class AppActivityMapper implements ActivityMapper {
         // This is begging for GIN
         if (place instanceof UserListPlace)
             return new UserListActivity((UserListPlace) place, clientFactory);
-        
+        else if (place instanceof UserPlace)
+            return new UserActivity((UserPlace) place, clientFactory);
         return null;
     }
     
