@@ -9,10 +9,10 @@ import com.test.mvp.client.mvp.UserDataProvider;
 import com.test.mvp.shared.PersonProxy;
 
 public class UserListViewImpl extends Composite implements UserListView {
+    private Presenter presenter = null;
     
     public UserListViewImpl() {
         CellTable<PersonProxy> personList = new CellTable<PersonProxy>();
-        personList.setSize("700px", "300px");
         TextColumn<PersonProxy> idCol = new TextColumn<PersonProxy>() {
             @Override
             public String getValue(PersonProxy object) {
@@ -52,5 +52,10 @@ public class UserListViewImpl extends Composite implements UserListView {
         panel.add(personList);
         panel.add(pager);
         initWidget(panel);
+    }
+    
+    @Override
+    public void setPresenter(Presenter listener) {
+        presenter = listener;
     }
 }
