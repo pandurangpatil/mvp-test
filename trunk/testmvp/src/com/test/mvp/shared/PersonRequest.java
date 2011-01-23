@@ -9,9 +9,11 @@ import com.google.gwt.requestfactory.shared.Service;
 
 @Service(com.test.mvp.server.domain.Person.class)
 public interface PersonRequest extends RequestContext {
-    InstanceRequest<PersonProxy, Void> save();
+    InstanceRequest<PersonProxy, Void> persist();
     
     Request<List<PersonProxy>> listAll();
+    
+    Request<Integer> listAllCount();
     
     Request<List<PersonProxy>> findUserEntries(int firstResult, int maxResults);
 }

@@ -1,13 +1,17 @@
 package com.test.mvp.client.mvp;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.test.mvp.client.ClientFactory;
 import com.test.mvp.client.place.UserListPlace;
 import com.test.mvp.client.ui.UserListView;
 import com.test.mvp.client.ui.UserListView.Presenter;
+import com.test.mvp.shared.MVPRequestFactory;
+import com.test.mvp.shared.PersonRequest;
 
 public class UserListActivity extends AbstractActivity implements Presenter {
     // Used to obtain views, eventBus, placeController
@@ -23,7 +27,18 @@ public class UserListActivity extends AbstractActivity implements Presenter {
      */
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        UserListView listView = clientFactory.getUserListView();
+        final UserListView listView = clientFactory.getUserListView();
+        listView.setPresenter(this);
+        final MVPRequestFactory requestFactory = GWT.create(MVPRequestFactory.class);
+        requestFactory.initialize(eventBus);
+        PersonRequest personReq = requestFactory.personRequest();
+        personReq.listAllCount().fire(new Receiver<Integer>() {
+            
+            @Override
+            public void onSuccess(Integer response) {
+                listView.setRowCount(response);
+            }
+        });
         containerWidget.setWidget(listView.asWidget());
     }
     

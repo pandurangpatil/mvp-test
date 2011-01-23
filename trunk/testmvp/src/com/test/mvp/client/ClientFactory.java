@@ -10,4 +10,5 @@ public interface ClientFactory {
     PlaceController getPlaceController();
     
     UserListView getUserListView();
+    
 }
