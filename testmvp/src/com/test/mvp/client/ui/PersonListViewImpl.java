@@ -55,8 +55,6 @@ public class PersonListViewImpl extends Composite implements PersonListView {
         };
         personList.addColumn(emailCol, "Email");
         pager = new SimplePager(TextLocation.CENTER, (Resources) GWT.create(Resources.class), false, 1000, true);
-        dataProvider = new PersonDataProvider(pager);
-        dataProvider.addDataDisplay(personList);
         pager.setRangeLimited(true);
         pager.setDisplay(personList);
         VerticalPanel panel = new VerticalPanel();
@@ -88,6 +86,11 @@ public class PersonListViewImpl extends Composite implements PersonListView {
                 presenter.goTo(place);
             }
         });
+    }
+    
+    public void setDataProvider(PersonDataProvider dataProvider) {
+        this.dataProvider = dataProvider;
+        dataProvider.addDataDisplay(personList);
     }
     
     public void setRowCount(int count) {

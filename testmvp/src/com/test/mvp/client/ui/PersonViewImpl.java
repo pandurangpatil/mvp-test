@@ -1,30 +1,17 @@
 package com.test.mvp.client.ui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.requestfactory.client.RequestFactoryEditorDriver;
-import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.test.mvp.client.place.UserListPlace;
-import com.test.mvp.client.ui.PersonListView.Presenter;
-import com.test.mvp.shared.MVPRequestFactory;
-import com.test.mvp.shared.PersonProxy;
-import com.test.mvp.shared.PersonRequest;
 
 public class PersonViewImpl extends DialogBox implements PersonView {
-    interface Driver extends RequestFactoryEditorDriver<PersonProxy, PersonEditor> {
-    };
     
-    private MVPRequestFactory requestFactory;
-    private PersonEditor      editor;
-    private Presenter         listner;
+    private PersonEditor        editor;
+    private PersonActionHandler listner;
     
-    public PersonViewImpl(MVPRequestFactory requestFactory) {
-        this.requestFactory = requestFactory;
+    public PersonViewImpl() {
         setSize("300px", "200px");
         setText("Person Editor");
         editor = new PersonEditor();
@@ -49,46 +36,15 @@ public class PersonViewImpl extends DialogBox implements PersonView {
         setWidget(panel);
     }
     
-    public void setPresenter(Presenter listner) {
+    public PersonEditor getEditor() {
+        return editor;
+    }
+    
+    public void setListner(PersonActionHandler listner) {
         this.listner = listner;
     }
     
-    Driver driver = GWT.create(Driver.class);
-    
-    public void edit(PersonProxy person) {
-        // Initialize the driver with the top-level editor
-        driver.initialize(requestFactory, editor);
-        // Copy the data in the object into the UI
-        PersonRequest personReq = requestFactory.personRequest();
-        driver.edit(person, personReq);
-        personReq.persist().using(person);
-        // Put the UI on the screen.
-    }
-    
-    public void create() {
-        // Initialize the driver with the top-level editor
-        driver.initialize(requestFactory, editor);
-        // Copy the data in the object into the UI
-        PersonRequest personReq = requestFactory.personRequest();
-        PersonProxy person = personReq.create(PersonProxy.class);
-        driver.edit(person, personReq);
-        personReq.persist().using(person);
-        // Put the UI on the screen.
-    }
-    
-    // Called by some UI action
     void save() {
-        RequestContext ctx = driver.flush();
-        ctx.fire(new Receiver<Void>() {
-            
-            @Override
-            public void onSuccess(Void response) {
-                listner.goTo(new UserListPlace("list"));
-            }
-        });
-        if (driver.hasErrors()) {
-            // A sub-editor reported errors
-        }
-        
+        listner.save();
     }
 }
