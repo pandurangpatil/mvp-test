@@ -8,17 +8,17 @@ import com.google.gwt.requestfactory.shared.Receiver;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.test.mvp.client.ClientFactory;
 import com.test.mvp.client.place.UserListPlace;
-import com.test.mvp.client.ui.UserListView;
-import com.test.mvp.client.ui.UserListView.Presenter;
+import com.test.mvp.client.ui.PersonListView;
+import com.test.mvp.client.ui.PersonListView.Presenter;
 import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonRequest;
 
-public class UserListActivity extends AbstractActivity implements Presenter {
+public class PersonListActivity extends AbstractActivity implements Presenter {
     // Used to obtain views, eventBus, placeController
     // Alternatively, could be injected via GIN
     private ClientFactory clientFactory;
     
-    public UserListActivity(UserListPlace place, ClientFactory clientFactory) {
+    public PersonListActivity(UserListPlace place, ClientFactory clientFactory) {
         this.clientFactory = clientFactory;
     }
     
@@ -27,7 +27,7 @@ public class UserListActivity extends AbstractActivity implements Presenter {
      */
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-        final UserListView listView = clientFactory.getUserListView();
+        final PersonListView listView = clientFactory.getUserListView();
         listView.setPresenter(this);
         final MVPRequestFactory requestFactory = GWT.create(MVPRequestFactory.class);
         requestFactory.initialize(eventBus);

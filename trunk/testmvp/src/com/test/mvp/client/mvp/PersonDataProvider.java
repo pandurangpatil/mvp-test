@@ -15,11 +15,11 @@ import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonProxy;
 import com.test.mvp.shared.PersonRequest;
 
-public class UserDataProvider extends AsyncDataProvider<PersonProxy> {
+public class PersonDataProvider extends AsyncDataProvider<PersonProxy> {
     
     private SimplePager pager;
     
-    public UserDataProvider(SimplePager pager) {
+    public PersonDataProvider(SimplePager pager) {
         this.pager = pager;
     }
     

@@ -29,9 +29,9 @@ public class AppActivityMapper implements ActivityMapper {
     public Activity getActivity(Place place) {
         // This is begging for GIN
         if (place instanceof UserListPlace)
-            return new UserListActivity((UserListPlace) place, clientFactory);
+            return new PersonListActivity((UserListPlace) place, clientFactory);
         else if (place instanceof UserPlace)
-            return new UserActivity((UserPlace) place, clientFactory);
+            return new PersonActivity((UserPlace) place, clientFactory);
         return null;
     }
     

@@ -4,16 +4,16 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.PlaceController;
-import com.test.mvp.client.ui.UserListView;
-import com.test.mvp.client.ui.UserListViewImpl;
-import com.test.mvp.client.ui.UserView;
-import com.test.mvp.client.ui.UserViewImpl;
+import com.test.mvp.client.ui.PersonListView;
+import com.test.mvp.client.ui.PersonListViewImpl;
+import com.test.mvp.client.ui.PersonView;
+import com.test.mvp.client.ui.PersonViewImpl;
 import com.test.mvp.shared.MVPRequestFactory;
 
 public class ClientFactoryImpl implements ClientFactory {
     private static final EventBus        eventBus        = new SimpleEventBus();
     private static final PlaceController placeController = new PlaceController(eventBus);
-    private static final UserListView    userListView    = new UserListViewImpl();
+    private static final PersonListView    userListView    = new PersonListViewImpl();
     
     @Override
     public EventBus getEventBus() {
@@ -26,7 +26,7 @@ public class ClientFactoryImpl implements ClientFactory {
     }
     
     @Override
-    public UserListView getUserListView() {
+    public PersonListView getUserListView() {
         return userListView;
     }
     

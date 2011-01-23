@@ -10,12 +10,12 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.test.mvp.client.place.UserListPlace;
-import com.test.mvp.client.ui.UserListView.Presenter;
+import com.test.mvp.client.ui.PersonListView.Presenter;
 import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonProxy;
 import com.test.mvp.shared.PersonRequest;
 
-public class UserViewImpl extends DialogBox implements UserView {
+public class PersonViewImpl extends DialogBox implements PersonView {
     interface Driver extends RequestFactoryEditorDriver<PersonProxy, PersonEditor> {
     };
     
@@ -23,7 +23,7 @@ public class UserViewImpl extends DialogBox implements UserView {
     private PersonEditor      editor;
     private Presenter         listner;
     
-    public UserViewImpl(MVPRequestFactory requestFactory) {
+    public PersonViewImpl(MVPRequestFactory requestFactory) {
         this.requestFactory = requestFactory;
         setSize("300px", "600px");
         setText("Person Editor");

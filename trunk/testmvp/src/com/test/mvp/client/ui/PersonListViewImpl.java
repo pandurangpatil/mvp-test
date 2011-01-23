@@ -13,19 +13,19 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.test.mvp.client.mvp.UserDataProvider;
+import com.test.mvp.client.mvp.PersonDataProvider;
 import com.test.mvp.client.place.UserPlace;
 import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonProxy;
 import com.test.mvp.shared.PersonRequest;
 
-public class UserListViewImpl extends Composite implements UserListView {
+public class PersonListViewImpl extends Composite implements PersonListView {
     private Presenter              presenter = null;
     private CellTable<PersonProxy> personList;
     private SimplePager            pager;
-    private UserDataProvider       dataProvider;
+    private PersonDataProvider       dataProvider;
     
-    public UserListViewImpl() {
+    public PersonListViewImpl() {
         personList = new CellTable<PersonProxy>();
         personList.setPageSize(10);
         TextColumn<PersonProxy> idCol = new TextColumn<PersonProxy>() {
@@ -57,7 +57,7 @@ public class UserListViewImpl extends Composite implements UserListView {
         };
         personList.addColumn(emailCol, "Email");
         pager = new SimplePager(TextLocation.CENTER, (Resources) GWT.create(Resources.class), false, 1000, true);
-        dataProvider = new UserDataProvider(pager);
+        dataProvider = new PersonDataProvider(pager);
         dataProvider.addDataDisplay(personList);
         pager.setRangeLimited(true);
         pager.setDisplay(personList);
