@@ -44,10 +44,21 @@ public class Testmvp implements EntryPoint {
     }
     
     // public void onModuleLoad() {
+    //
     // final EventBus eventBus = new SimpleEventBus();
     // final MVPRequestFactory requestFactory = GWT.create(MVPRequestFactory.class);
     // requestFactory.initialize(eventBus);
     // PersonRequest personReq = requestFactory.personRequest();
+    // for (int i = 0; i < 20; i++) {
+    // PersonRequest personReq1 = requestFactory.personRequest();
+    // PersonProxy newPerson = personReq1.create(PersonProxy.class);
+    // newPerson.setFirstName("first" + i);
+    // newPerson.setLastName("last" + i);
+    // newPerson.setEmailId("first.last@gmail.com" + i);
+    // personReq1.save().using(newPerson).fire();
+    //
+    // }
+    //
     // personReq.listAll().fire(new Receiver<List<PersonProxy>>() {
     //
     // @Override

@@ -10,9 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Query;
 import javax.persistence.Version;
 
-import com.google.gwt.requestfactory.shared.Request;
-import com.test.mvp.shared.PersonProxy;
-
 @Entity
 public class Person {
     @Id
@@ -66,7 +63,7 @@ public class Person {
         this.emailId = emailId;
     }
     
-    public void save() {
+    public void persist() {
         EntityManager em = EMF.get().createEntityManager();
         try {
             em.getTransaction().begin();
@@ -81,6 +78,18 @@ public class Person {
     
     public static Person findPerson(Long id) {
         return null;
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static Integer listAllCount() {
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            List<Person> list = em.createQuery("select o from Person o").getResultList();
+            // force to get all the employees
+            return list.size();
+        } finally {
+            em.close();
+        }
     }
     
     @SuppressWarnings("unchecked")
