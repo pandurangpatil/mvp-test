@@ -25,7 +25,7 @@ public class PersonViewImpl extends DialogBox implements PersonView {
     
     public PersonViewImpl(MVPRequestFactory requestFactory) {
         this.requestFactory = requestFactory;
-        setSize("300px", "600px");
+        setSize("300px", "200px");
         setText("Person Editor");
         editor = new PersonEditor();
         // Enable animation.
@@ -55,11 +55,17 @@ public class PersonViewImpl extends DialogBox implements PersonView {
     
     Driver driver = GWT.create(Driver.class);
     
-    public void init() {
+    public void edit(PersonProxy person) {
+        // Initialize the driver with the top-level editor
         driver.initialize(requestFactory, editor);
+        // Copy the data in the object into the UI
+        PersonRequest personReq = requestFactory.personRequest();
+        driver.edit(person, personReq);
+        personReq.persist().using(person);
+        // Put the UI on the screen.
     }
     
-    public void edit(PersonProxy p) {
+    public void create() {
         // Initialize the driver with the top-level editor
         driver.initialize(requestFactory, editor);
         // Copy the data in the object into the UI
