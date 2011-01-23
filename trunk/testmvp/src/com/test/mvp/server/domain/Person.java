@@ -77,7 +77,14 @@ public class Person {
     }
     
     public static Person findPerson(Long id) {
-        return null;
+        EntityManager em = EMF.get().createEntityManager();
+        try {
+            Person person = em.find(Person.class, id);
+            // force to get all the employees
+            return person;
+        } finally {
+            em.close();
+        }
     }
     
     @SuppressWarnings("unchecked")
