@@ -2,15 +2,16 @@ package com.test.mvp.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
-import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonProxy;
 
 // public class HelloPlace extends ActivityPlace<HelloActivity>
 public class UserPlace extends Place {
-    private String            token;
-    private PersonProxy       person;
     
-    private MVPRequestFactory requestFactory;
+    public static String NEW  = "new";
+    public static String EDIT = "edit";
+    
+    private String       token;
+    private PersonProxy  person;
     
     public UserPlace(String token) {
         this.token = token;
@@ -26,14 +27,6 @@ public class UserPlace extends Place {
     
     public String getToken() {
         return token;
-    }
-    
-    public MVPRequestFactory getRequestFactory() {
-        return requestFactory;
-    }
-    
-    public void setRequestFactory(MVPRequestFactory requestFactory) {
-        this.requestFactory = requestFactory;
     }
     
     public static class Tokenizer implements PlaceTokenizer<UserPlace> {

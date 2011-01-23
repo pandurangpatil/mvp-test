@@ -3,8 +3,6 @@ package com.test.mvp.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.Resources;
@@ -13,17 +11,17 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.test.mvp.client.mvp.PersonDataProvider;
 import com.test.mvp.client.place.UserPlace;
-import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonProxy;
-import com.test.mvp.shared.PersonRequest;
 
 public class PersonListViewImpl extends Composite implements PersonListView {
     private Presenter              presenter = null;
     private CellTable<PersonProxy> personList;
     private SimplePager            pager;
-    private PersonDataProvider       dataProvider;
+    private PersonDataProvider     dataProvider;
     
     public PersonListViewImpl() {
         personList = new CellTable<PersonProxy>();
@@ -69,11 +67,7 @@ public class PersonListViewImpl extends Composite implements PersonListView {
             
             @Override
             public void onClick(ClickEvent event) {
-                UserPlace place = new UserPlace("usernew");
-                EventBus eventBus = new SimpleEventBus();
-                MVPRequestFactory requestFactory = GWT.create(MVPRequestFactory.class);
-                requestFactory.initialize(eventBus);
-                place.setRequestFactory(requestFactory);
+                UserPlace place = new UserPlace(UserPlace.NEW);
                 presenter.goTo(place);
             }
         });
@@ -84,6 +78,16 @@ public class PersonListViewImpl extends Composite implements PersonListView {
         
         initWidget(panel);
         
+        final SingleSelectionModel<PersonProxy> selectionModel = new SingleSelectionModel<PersonProxy>();
+        personList.setSelectionModel(selectionModel);
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            public void onSelectionChange(SelectionChangeEvent event) {
+                PersonProxy selected = selectionModel.getSelectedObject();
+                UserPlace place = new UserPlace(UserPlace.EDIT);
+                place.setPerson(selected);
+                presenter.goTo(place);
+            }
+        });
     }
     
     public void setRowCount(int count) {
