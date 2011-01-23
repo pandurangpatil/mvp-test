@@ -43,6 +43,7 @@ public class Testmvp implements EntryPoint {
         historyHandler.handleCurrentHistory();
     }
     
+    
     // public void onModuleLoad() {
     //
     // final EventBus eventBus = new SimpleEventBus();

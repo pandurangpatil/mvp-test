@@ -1,7 +1,6 @@
 package com.test.mvp.client.mvp;
 
 import com.google.gwt.activity.shared.AbstractActivity;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.shared.Receiver;
@@ -10,7 +9,6 @@ import com.test.mvp.client.ClientFactory;
 import com.test.mvp.client.place.UserListPlace;
 import com.test.mvp.client.ui.PersonListView;
 import com.test.mvp.client.ui.PersonListView.Presenter;
-import com.test.mvp.shared.MVPRequestFactory;
 import com.test.mvp.shared.PersonRequest;
 
 public class PersonListActivity extends AbstractActivity implements Presenter {
@@ -28,10 +26,10 @@ public class PersonListActivity extends AbstractActivity implements Presenter {
     @Override
     public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
         final PersonListView listView = clientFactory.getUserListView();
+        PersonDataProvider dataProvider = new PersonDataProvider(clientFactory);
+        listView.setDataProvider(dataProvider);
         listView.setPresenter(this);
-        final MVPRequestFactory requestFactory = GWT.create(MVPRequestFactory.class);
-        requestFactory.initialize(eventBus);
-        PersonRequest personReq = requestFactory.personRequest();
+        PersonRequest personReq = clientFactory.getRequestFactory().personRequest();
         personReq.listAllCount().fire(new Receiver<Integer>() {
             
             @Override
@@ -40,14 +38,6 @@ public class PersonListActivity extends AbstractActivity implements Presenter {
             }
         });
         containerWidget.setWidget(listView.asWidget());
-    }
-    
-    /**
-     * Ask user before stopping this activity
-     */
-    @Override
-    public String mayStop() {
-        return "Please hold on. This activity is stopping.";
     }
     
     @Override
