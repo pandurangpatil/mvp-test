@@ -8,6 +8,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.client.RequestFactoryEditorDriver;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.RequestContext;
 import com.google.gwt.requestfactory.shared.Violation;
 import com.google.gwt.user.client.Window;
@@ -39,13 +40,31 @@ public class PersonActivity extends AbstractActivity implements PersonView.Perso
     }
     
     @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
+    public void start(final AcceptsOneWidget panel, EventBus eventBus) {
         impl = new PersonViewImpl();
         impl.setListner(this);
         if (UserPlace.NEW.equals(place.getToken())) {
-            create(impl.getEditor());
+            driver.initialize(clientFactory.getRequestFactory(), impl.getEditor());
+            PersonRequest personReq = clientFactory.getRequestFactory().personRequest();
+            PersonProxy person = personReq.create(PersonProxy.class);
+            driver.edit(person, personReq);
+            personReq.persist().using(person);
         } else if (UserPlace.EDIT.equals(place.getToken())) {
-            edit(place.getPerson(), impl.getEditor());
+            Request<PersonProxy> fetchRequest = clientFactory.getRequestFactory().find(place.getPerson().stableId());
+            
+            // Add the paths that the EditorDrives computes
+            fetchRequest.with(driver.getPaths());
+            
+            // We could do more with the request, but we just fire it
+            fetchRequest.to(new Receiver<PersonProxy>() {
+                @Override
+                public void onSuccess(PersonProxy person) {
+                    driver.initialize(clientFactory.getRequestFactory(), impl.getEditor());
+                    PersonRequest personReq = clientFactory.getRequestFactory().personRequest();
+                    driver.edit(person, personReq);
+                    personReq.persist().using(person);
+                }
+            }).fire();
         }
         panel.setWidget(impl);
     }
@@ -60,22 +79,8 @@ public class PersonActivity extends AbstractActivity implements PersonView.Perso
         
     }
     
-    public void edit(PersonProxy person, PersonEditor editor) {
-        // Initialize the driver with the top-level editor
-        driver.initialize(clientFactory.getRequestFactory(), editor);
-        // Copy the data in the object into the UI
-        PersonRequest personReq = clientFactory.getRequestFactory().personRequest();
-        driver.edit(person, personReq);
-        personReq.persist().using(person);
-    }
-    
-    public void create(PersonEditor editor) {
-        // Initialize the driver with the top-level editor
-        driver.initialize(clientFactory.getRequestFactory(), editor);
-        PersonRequest personReq = clientFactory.getRequestFactory().personRequest();
-        PersonProxy person = personReq.create(PersonProxy.class);
-        driver.edit(person, personReq);
-        personReq.persist().using(person);
+    public void edit(PersonProxy person, final PersonEditor editor) {
+        
     }
     
     @Override
