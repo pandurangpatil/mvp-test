@@ -5,30 +5,45 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<div class="{style.rightAlign}">
-			First Name:
-			<e:ValueBoxEditorDecorator ui:field="firstName"
-				stylePrimaryName="{style.editField}">
-				<e:valuebox>
-					<g:TextBox ui:field="firstNameBox" stylePrimaryName="{style.editField}" />
-				</e:valuebox>
-			</e:ValueBoxEditorDecorator>
-			<br />
-			Last Name:
-			<e:ValueBoxEditorDecorator ui:field="lastName"
-				stylePrimaryName="{style.editField}">
-				<e:valuebox>
-					<g:TextBox stylePrimaryName="{style.editField}" />
-				</e:valuebox>
-			</e:ValueBoxEditorDecorator>
-			<br />
-			Email Id:
-			<e:ValueBoxEditorDecorator ui:field="emailId"
-				stylePrimaryName="{style.editField}">
-				<e:valuebox>
-					<g:TextBox stylePrimaryName="{style.editField}" />
-				</e:valuebox>
-			</e:ValueBoxEditorDecorator>
-			<br />
+			<table>
+				<tr>
+					<td>First Name:</td>
+					<td>
+						<e:ValueBoxEditorDecorator ui:field="firstName"
+							stylePrimaryName="{style.editField}">
+							<e:valuebox>
+								<g:TextBox ui:field="firstNameBox" stylePrimaryName="{style.editField}" />
+							</e:valuebox>
+						</e:ValueBoxEditorDecorator>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Last Name:
+					</td>
+					<td>
+						<e:ValueBoxEditorDecorator ui:field="lastName"
+							stylePrimaryName="{style.editField}">
+							<e:valuebox>
+								<g:TextBox stylePrimaryName="{style.editField}" />
+							</e:valuebox>
+						</e:ValueBoxEditorDecorator>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Email Id:
+					</td>
+					<td>
+						<e:ValueBoxEditorDecorator ui:field="emailId"
+							stylePrimaryName="{style.editField}">
+							<e:valuebox>
+								<g:TextBox stylePrimaryName="{style.editField}" />
+							</e:valuebox>
+						</e:ValueBoxEditorDecorator>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</g:HTMLPanel>
 </ui:UiBinder>

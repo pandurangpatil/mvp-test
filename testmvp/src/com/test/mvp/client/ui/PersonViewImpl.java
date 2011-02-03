@@ -4,7 +4,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.test.mvp.client.place.UserListPlace;
 
 public class PersonViewImpl extends DialogBox implements PersonView {
     
@@ -22,7 +24,17 @@ public class PersonViewImpl extends DialogBox implements PersonView {
         setGlassEnabled(true);
         center();
         VerticalPanel panel = new VerticalPanel();
+        HorizontalPanel hpanel = new HorizontalPanel();
+        
         panel.add(editor);
+        Button cancel = new Button("Cancel");
+        cancel.addClickHandler(new ClickHandler() {
+            
+            @Override
+            public void onClick(ClickEvent event) {
+                listner.goTo(new UserListPlace("list"));
+            }
+        });
         Button save = new Button("Save");
         save.addClickHandler(new ClickHandler() {
             
@@ -32,7 +44,10 @@ public class PersonViewImpl extends DialogBox implements PersonView {
                 
             }
         });
-        panel.add(save);
+        hpanel.add(save);
+        hpanel.add(cancel);
+        panel.add(hpanel);
+        
         setWidget(panel);
     }
     

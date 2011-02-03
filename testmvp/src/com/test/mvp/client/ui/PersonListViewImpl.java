@@ -79,11 +79,19 @@ public class PersonListViewImpl extends Composite implements PersonListView {
         final SingleSelectionModel<PersonProxy> selectionModel = new SingleSelectionModel<PersonProxy>();
         personList.setSelectionModel(selectionModel);
         selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            private boolean unselectEvent = false;
+            
             public void onSelectionChange(SelectionChangeEvent event) {
-                PersonProxy selected = selectionModel.getSelectedObject();
-                UserPlace place = new UserPlace(UserPlace.EDIT);
-                place.setPerson(selected);
-                presenter.goTo(place);
+                if (!unselectEvent) {
+                    PersonProxy selected = selectionModel.getSelectedObject();
+                    selectionModel.setSelected(selected, false);
+                    unselectEvent = true;
+                    UserPlace place = new UserPlace(UserPlace.EDIT);
+                    place.setPerson(selected);
+                    presenter.goTo(place);
+                } else {
+                    unselectEvent = false;
+                }
             }
         });
     }
