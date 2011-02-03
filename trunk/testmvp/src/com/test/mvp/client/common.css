@@ -1,5 +1,5 @@
 /* Common measurements used in the app. */
-@def fieldWidth 30em;
+@def fieldWidth 14em;
 
 .editField {
   display: inline;
